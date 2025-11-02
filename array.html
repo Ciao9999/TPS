@@ -20,6 +20,7 @@
       text-align: center;
     }
   </style>
+  
 </head>
 <body>
 
@@ -68,17 +69,13 @@
 
       for (var j = 0; j < numeri.length; j++) {
         html += "<td>" + numeri[j] + "</td>";
-
         if ((j + 1) % 10 === 0) {
           html += "</tr><tr>";
         }
       }
-
       html += "</tr></table>";
-
       document.getElementById("risultati").innerHTML = html;
     }
   </script>
-
 </body>
 </html>
