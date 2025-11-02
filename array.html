@@ -1,19 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizio Array Numeri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    td, th {
+      border: 1px solid #999;
+      padding: 5px 10px;
+      text-align: center;
+    }
+
+    .positivo { background-color: #c8f7c5; }
+    .negativo { background-color: #f9c0c0; }
+  </style>
+</head>
 <body>
-<h1>JavaScript Math</h1>
-<h2>The Math.random() Method</h2>
 
-<p>Math.random() returns a random number between -100 (included) and 100 (included):</p>
+  <h2>Generazione di 100 numeri casuali</h2>
 
-<p id="demo"></p>
+  <button onclick="generaNumeri()">Genera e Calcola</button>
 
-<script>
-document.getElementById("demo").innerHTML = Math.random();
+  <div id="risultati"></div>
 
-  Math.floor(Math.random() * 201)-100;
-  
-</script>
+  <script>
+    function generaNumeri() {
+      var numeri = [];
+      var somma = 0;
+      var massimo = -100;
+      var minimo = 100;
+      var maggiori50 = [];
+
+      for (var i = 0; i < 100; i++) {
+        var n = Math.floor(Math.random() * 201) - 100;
+        numeri.push(n);
+        somma = somma + n;
+
+        if (n > massimo) {
+          massimo = n;
+        }
+
+        if (n < minimo) {
+          minimo = n;
+        }
+
+        if (n > 50) {
+          maggiori50.push(n);
+        }
+      }
+
+      var media = somma / numeri.length;
+
+
+      var html = "<h3>Risultati</h3>";
+      html += "<p>Media: <strong>" + media.toFixed(2) + "</strong></p>";
+      html += "<p>Massimo: <strong>" + massimo + "</strong></p>";
+      html += "<p>Minimo: <strong>" + minimo + "</strong></p>";
+      html += "<p>Numeri maggiori di 50: <strong>" + maggiori50.length + "</strong></p>";
+
+
+      html += "<h3>Griglia dei numeri generati:</h3>";
+      html += "<table><tr>";
+
+      for (var j = 0; j < numeri.length; j++) {
+        var colore = numeri[j] >= 0 ? "positivo" : "negativo";
+        html += "<td class='" + colore + "'>" + numeri[j] + "</td>";
+
+
+        if ((j + 1) % 10 === 0) {
+          html += "</tr><tr>";
+        }
+      }
+
+      html += "</tr></table>";
+
+      document.getElementById("risultati").innerHTML = html;
+    }
+  </script>
 
 </body>
 </html>
