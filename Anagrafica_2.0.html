@@ -57,7 +57,6 @@
     CAP: <input type="text" id="cap"><br><br>
     Anno di nascita: <input type="number" id="annoNascita"><br><br>
 
-    <!-- RADIOBUTTON SESSO -->
     <label>Sesso:</label>
     <div class="gruppo-radio">
       <label><input type="radio" name="sesso" value="Maschio"> Maschio</label>
@@ -65,7 +64,6 @@
       <label><input type="radio" name="sesso" value="Altro"> Altro</label>
     </div>
 
-    <!-- COMBOBOX PROVINCIA -->
     <label>Provincia:</label>
     <select id="provincia">
       <option value="">-- Seleziona provincia --</option>
@@ -76,7 +74,6 @@
       <option value="FI">Firenze</option>
     </select>
 
-    <!-- CHECKBOX MEZZI DI LOCOMOZIONE -->
     <label>Mezzi di locomozione posseduti in famiglia:</label>
     <div class="gruppo-checkbox">
       <label><input type="checkbox" name="mezzo" value="Auto"> Auto</label>
@@ -86,7 +83,6 @@
       <label><input type="checkbox" name="mezzo" value="Yacht"> Yacht</label>
     </div>
 
-    <!-- LISTBOX MATERIE -->
     <label>Materie di insegnamento preferite (max 3):</label>
     <select id="materie" multiple size="6" style="width: 320px;">
       <option value="Matematica">Matematica</option>
@@ -138,29 +134,18 @@
           generazione = "Non classificata";
       }
 
-      var sesso = document.querySelector('input[name="sesso"]:checked');
-      sesso = sesso ? sesso.value : "Non specificato";
+      var sesso = document.getElementById("sesso").value;
 
-      var provincia = document.getElementById("provincia").value || "Non selezionata";
+      var provincia = document.getElementById("provincia").value;
 
-      var mezzi = document.querySelectorAll('input[name="mezzo"]:checked');
-      var mezziPosseduti = [];
-      mezzi.forEach(function(m) {
-        mezziPosseduti.push(m.value);
-      });
-      if (mezziPosseduti.length === 0) mezziPosseduti = ["Nessuno"];
+      var mezzi = document.getElementById("sesso").value;
 
       var materieSelezionate = [];
       var materie = document.getElementById("materie");
-      for (var i = 0; i < materie.options.length; i++) {
+      for (var i = 0; i < 3; i++) {
         if (materie.options[i].selected) {
           materieSelezionate.push(materie.options[i].value);
         }
-      }
-
-      if (materieSelezionate.length > 3) {
-        alert("Puoi selezionare al massimo 3 materie!");
-        return;
       }
 
       document.getElementById("risultato").innerHTML =
@@ -175,8 +160,8 @@
         "Generazione: " + generazione + "<br>" +
         "Sesso: " + sesso + "<br>" +
         "Provincia: " + provincia + "<br>" +
-        "Mezzi posseduti: " + mezziPosseduti.join(', ') + "<br>" +
-        "Materie preferite: " + materieSelezionate.join(', ');
+        "Mezzi posseduti: " + mezziPosseduti + "<br>" +
+        "Materie preferite: " + materieSelezionate;
     }
   </script>
 
