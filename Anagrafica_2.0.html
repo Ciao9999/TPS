@@ -115,48 +115,55 @@
       var cap = document.getElementById("cap").value;
       var anno = parseInt(document.getElementById("annoNascita").value);
 
+      // Calcolo età e generazione
       var annoCorrente = 2025;
       var eta = annoCorrente - anno;
 
       var generazione;
       switch (true) {
-        case (anno >= 2013):
-          generazione = "Generazione Alpha"; break;
-        case (anno >= 1997):
-          generazione = "Generazione Z"; break;
-        case (anno >= 1981):
-          generazione = "Millennials"; break;
-        case (anno >= 1965):
-          generazione = "Generazione X"; break;
-        case (anno >= 1946):
-          generazione = "Baby Boomers"; break;
-        case (anno >= 1928):
-          generazione = "Generazione Silenziosa"; break;
-        case (anno >= 1901):
-          generazione = "Greatest Generation"; break;
-        default:
-          generazione = "Non classificata";
+        case (anno >= 2013): generazione = "Generazione Alpha"; break;
+        case (anno >= 1997): generazione = "Generazione Z"; break;
+        case (anno >= 1981): generazione = "Millennials"; break;
+        case (anno >= 1965): generazione = "Generazione X"; break;
+        case (anno >= 1946): generazione = "Baby Boomers"; break;
+        case (anno >= 1928): generazione = "Generazione Silenziosa"; break;
+        case (anno >= 1901): generazione = "Greatest Generation"; break;
+        default: generazione = "Non classificata";
       }
 
-      var sesso = document.querySelector('input[name="sesso"]:checked');
+      // --- Sesso semplificato ---
+      var sesso = "";
+      if (document.getElementById("anagraficaForm").sesso[0].checked) sesso = "Maschio";
+      else if (document.getElementById("anagraficaForm").sesso[1].checked) sesso = "Femmina";
+      else if (document.getElementById("anagraficaForm").sesso[2].checked) sesso = "Altro";
+      // Se non selezionato, sesso resta ""
 
+      // --- Provincia ---
       var provincia = document.getElementById("provincia").value;
 
-      var mezzi = document.querySelectorAll('input[name="mezzo"]:checked');
-      var mezziPosseduti = [];
-      mezzi.forEach(function(m) {
-        mezziPosseduti.push(m.value);
-      });
-      if (mezziPosseduti.length === 0) mezziPosseduti = ["Nessuno"];
+      // --- Mezzi di locomozione (semplice) ---
+      var mezzi = "";
+      if (document.getElementById("anagraficaForm").mezzo[0].checked) mezzi += "Auto ";
+      if (document.getElementById("anagraficaForm").mezzo[1].checked) mezzi += "Moto ";
+      if (document.getElementById("anagraficaForm").mezzo[2].checked) mezzi += "Bici ";
+      if (document.getElementById("anagraficaForm").mezzo[3].checked) mezzi += "Aereo ";
+      if (document.getElementById("anagraficaForm").mezzo[4].checked) mezzi += "Yacht ";
+      // Se nessuno selezionato, mezzi resta ""
 
+      // --- Materie ---
       var materieSelezionate = [];
       var materie = document.getElementById("materie");
-      for (var i = 0; i < 3 ; i++) {
+      for (var i = 0; i < materie.options.length; i++) {
         if (materie.options[i].selected) {
           materieSelezionate.push(materie.options[i].value);
         }
       }
+      if (materieSelezionate.length > 3) {
+        alert("Puoi selezionare al massimo 3 materie!");
+        return;
+      }
 
+      // --- Mostra risultati ---
       document.getElementById("risultato").innerHTML =
         "<h3>Dati inseriti:</h3>" +
         "Nome: " + nome + "<br>" +
@@ -164,13 +171,13 @@
         "Indirizzo: " + indirizzo + "<br>" +
         "Città: " + citta + "<br>" +
         "CAP: " + cap + "<br>" +
-        "Anno di nascita: " + anno + "<br>" +
-        "Età: " + eta + " anni<br>" +
-        "Generazione: " + generazione + "<br>" +
+        "Anno di nascita: " + (anno || "") + "<br>" +
+        "Età: " + (eta || "") + " anni<br>" +
+        "Generazione: " + (generazione || "") + "<br>" +
         "Sesso: " + sesso + "<br>" +
         "Provincia: " + provincia + "<br>" +
-        "Mezzi posseduti: " + mezziPosseduti.join(', ') + "<br>" +
-        "Materie preferite: " + materieSelezionate.join(', ');
+        "Mezzi posseduti: " + mezzi + "<br>" +
+        "Materie preferite: " + materieSelezionate.join(", ");
     }
   </script>
 
