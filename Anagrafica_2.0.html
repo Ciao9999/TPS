@@ -129,19 +129,16 @@
           generazione = "Non classificata";
       }
 
-      // RADIOBUTTON SESSO
-      var sesso = document.querySelector('input[name="sesso"]:checked');
-      if (sesso) {
-        sesso = sesso.value;
-      } else {
-        sesso = "Non specificato";
-      }
+   //   var sesso = document.querySelector('input[name="sesso"]:checked');
+ //     if (sesso) {
+      //  sesso = sesso.value;
+    //  } else {
+  //      sesso = "Non specificato";
+//      }
 
-      // COMBOBOX PROVINCIA
-      var provincia = document.getElementById("provincia").value;
-      if (provincia === "") provincia = "Non selezionata";
+  //    var provincia = document.getElementById("provincia").value;
+    //  if (provincia === "") provincia = "Non selezionata";
 
-      // CHECKBOX MEZZI DI LOCOMOZIONE
       var mezzi = document.querySelectorAll('input[name="mezzo"]:checked');
       var mezziPosseduti = [];
       mezzi.forEach(function(m) {
@@ -151,21 +148,14 @@
         mezziPosseduti = ["Nessuno"];
       }
 
-      // LISTBOX MATERIE (max 3)
       var materieSelezionate = [];
       var materie = document.getElementById("materie");
-      for (var i = 0; i < materie.options.length; i++) {
+      for (var i = 0; i < 3; i++) {
         if (materie.options[i].selected) {
           materieSelezionate.push(materie.options[i].value);
         }
       }
 
-      if (materieSelezionate.length > 3) {
-        alert("Puoi selezionare al massimo 3 materie!");
-        return; // esce dalla funzione
-      }
-
-      // Mostro tutto
       document.getElementById("risultato").innerHTML =
         "<h3>Dati inseriti:</h3>" +
         "Nome: " + nome + "<br>" +
@@ -178,8 +168,8 @@
         "Generazione: " + generazione + "<br>" +
         "Sesso: " + sesso + "<br>" +
         "Provincia: " + provincia + "<br>" +
-        "Mezzi posseduti: " + mezziPosseduti.join(", ") + "<br>" +
-        "Materie preferite: " + materieSelezionate.join(", ");
+        "Mezzi posseduti: " + mezziPosseduti + "<br>" +
+        "Materie preferite: " + materieSelezionate;
     }
   </script>
 
