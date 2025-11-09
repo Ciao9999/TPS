@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Anagrafica Utente (Versione Principiante)</title>
+  <title>Anagrafica Utente</title>
 
   <style>
     body { 
@@ -156,11 +156,13 @@
 
       var materieScelte = "";
       var listaMaterie = document.getElementById("materie");
-      var count = 0;
       for (var i = 0; i < listaMaterie.options.length; i++) {
         if (listaMaterie.options[i].selected) {
           materieScelte = materieScelte + listaMaterie.options[i].value + ", ";
-          count = count + 1;
+          if(i>3){
+            materieScelte = "hai selezionato troppe materie";
+            break;
+          }
         }
       }
 
