@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -44,6 +43,7 @@
   <h2>Inserisci i dati anagrafici</h2>
 
   <form id="anagraficaForm">
+    
     Nome: <input type="text" id="nome"><br><br>
     Cognome: <input type="text" id="cognome"><br><br>
     Indirizzo: <input type="text" id="indirizzo"><br><br>
@@ -52,9 +52,9 @@
     Anno di nascita: <input type="number" id="annoNascita"><br><br>
 
     <label>Sesso:</label>
-    <input type="radio" name="sesso" id="sessoM" value="Maschio"> Maschio
-    <input type="radio" name="sesso" id="sessoF" value="Femmina"> Femmina
-    <input type="radio" name="sesso" id="sessoA" value="Altro"> Altro
+    <input type="radio" name="sesso" value="Maschio"> Maschio
+    <input type="radio" name="sesso" value="Femmina"> Femmina
+    <input type="radio" name="sesso" value="Altro"> Altro
     <br><br>
 
     <label>Provincia:</label>
@@ -68,11 +68,11 @@
     </select>
 
     <label>Mezzi posseduti in famiglia:</label>
-    <input type="checkbox" id="auto" value="Auto"> Auto
-    <input type="checkbox" id="moto" value="Moto"> Moto
-    <input type="checkbox" id="bici" value="Bici"> Bici
-    <input type="checkbox" id="aereo" value="Aereo"> Aereo
-    <input type="checkbox" id="yacht" value="Yacht"> Yacht
+    <input type="checkbox" class="mezzo" value="Auto"> Auto
+    <input type="checkbox" class="mezzo" value="Moto"> Moto
+    <input type="checkbox" class="mezzo" value="Bici"> Bici
+    <input type="checkbox" class="mezzo" value="Aereo"> Aereo
+    <input type="checkbox" class="mezzo" value="Yacht"> Yacht
     <br><br>
 
     <label>Materie di insegnamento preferite</label><br>
@@ -94,95 +94,111 @@
 
   <div id="risultato"></div>
 
-  <script>
-    function mostraDati() {
-      var nome = document.getElementById("nome").value;
-      var cognome = document.getElementById("cognome").value;
-      var indirizzo = document.getElementById("indirizzo").value;
-      var citta = document.getElementById("citta").value;
-      var cap = document.getElementById("cap").value;
-      var anno = parseInt(document.getElementById("annoNascita").value);
-
-      var annoCorrente = 2025;
-      var eta = annoCorrente - anno;
-
-      var generazione = "";
-      if (anno >= 2013) {
-        generazione = "Generazione Alpha";
-      } else if (anno >= 1997) {
-        generazione = "Generazione Z";
-      } else if (anno >= 1981) {
-        generazione = "Millennials";
-      } else if (anno >= 1965) {
-        generazione = "Generazione X";
-      } else if (anno >= 1946) {
-        generazione = "Baby Boomers";
-      } else if (anno >= 1928) {
-        generazione = "Generazione Silenziosa";
-      } else if (anno >= 1901) {
-        generazione = "Greatest Generation";
-      } else {
-        generazione = "Non classificata";
-      }
-
-      var sesso = "";
-      if (document.getElementById("sessoM").checked) {
-        sesso = "Maschio";
-      }
-      if (document.getElementById("sessoF").checked) {
-        sesso = "Femmina";
-      }
-      if (document.getElementById("sessoA").checked) {
-        sesso = "Altro";
-      }
-
-      var provincia = document.getElementById("provincia").value;
-
-      var mezzi = "";
-      if (document.getElementById("auto").checked) {
-        mezzi = mezzi + "Auto ";
-      }
-      if (document.getElementById("moto").checked) {
-        mezzi = mezzi + "Moto ";
-      }
-      if (document.getElementById("bici").checked) {
-        mezzi = mezzi + "Bici ";
-      }
-      if (document.getElementById("aereo").checked) {
-        mezzi = mezzi + "Aereo ";
-      }
-      if (document.getElementById("yacht").checked) {
-        mezzi = mezzi + "Yacht ";
-      }
-
-      var materieScelte = "";
-      var listaMaterie = document.getElementById("materie");
-      for (var i = 0; i < listaMaterie.options.length; i++) {
-        if (listaMaterie.options[i].selected) {
-          materieScelte = materieScelte + listaMaterie.options[i].value + ", ";
-          if(i>2){
-            materieScelte = "hai selezionato troppe materie";
-            break;
-          }
-        }
-      }
-
-      document.getElementById("risultato").innerHTML =
-        "<h3>Dati inseriti:</h3>" +
-        "Nome: " + nome + "<br>" +
-        "Cognome: " + cognome + "<br>" +
-        "Indirizzo: " + indirizzo + "<br>" +
-        "Città: " + citta + "<br>" +
-        "CAP: " + cap + "<br>" +
-        "Anno di nascita: " + (anno || "") + "<br>" +
-        "Età: " + (eta || "") + " anni<br>" +
-        "Generazione: " + generazione + "<br>" +
-        "Sesso: " + sesso + "<br>" +
-        "Provincia: " + provincia + "<br>" +
-        "Mezzi posseduti: " + mezzi + "<br>" +
-        "Materie preferite: " + materieScelte;
-    }
-  </script>
-
 </body>
 </html>
+
+<script>
+  function mostraDati() {
+    var persona = {
+      nome: "",
+      cognome: "",
+      indirizzo: "",
+      citta: "",
+      cap: "",
+      annoNascita: 0,
+      eta: 0,
+      generazione: "",
+      sesso: "",
+      provincia: "",
+      mezzi: "",
+      materie: ""
+    };
+
+    persona.nome = document.getElementById("nome").value;
+    persona.cognome = document.getElementById("cognome").value;
+    persona.indirizzo = document.getElementById("indirizzo").value;
+    persona.citta = document.getElementById("citta").value;
+    persona.cap = document.getElementById("cap").value;
+    persona.annoNascita = parseInt(document.getElementById("annoNascita").value);
+
+    var annoCorrente = 2025;
+    persona.eta = annoCorrente - persona.annoNascita;
+
+    if (persona.annoNascita >= 2013) {
+      persona.generazione = "Generazione Alpha";
+    } else if (persona.annoNascita >= 1997) {
+      persona.generazione = "Generazione Z";
+    } else if (persona.annoNascita >= 1981) {
+      persona.generazione = "Millennials";
+    } else if (persona.annoNascita >= 1965) {
+      persona.generazione = "Generazione X";
+    } else if (persona.annoNascita >= 1946) {
+      persona.generazione = "Baby Boomers";
+    } else if (persona.annoNascita >= 1928) {
+      persona.generazione = "Generazione Silenziosa";
+    } else if (persona.annoNascita >= 1901) {
+      persona.generazione = "Greatest Generation";
+    } else {
+      persona.generazione = "Non classificata";
+    }
+
+    if (document.getElementById("sessoM").checked) {
+      persona.sesso = "Maschio";
+    }
+    if (document.getElementById("sessoF").checked) {
+      persona.sesso = "Femmina";
+    }
+    if (document.getElementById("sessoA").checked) {
+      persona.sesso = "Altro";
+    }
+
+    persona.provincia = document.getElementById("provincia").value;
+
+    persona.mezzi = "";
+    if (document.getElementById("auto").checked) {
+      persona.mezzi = persona.mezzi + "Auto ";
+    }
+    if (document.getElementById("moto").checked) {
+      persona.mezzi = persona.mezzi + "Moto ";
+    }
+    if (document.getElementById("bici").checked) {
+      persona.mezzi = persona.mezzi + "Bici ";
+    }
+    if (document.getElementById("aereo").checked) {
+      persona.mezzi = persona.mezzi + "Aereo ";
+    }
+    if (document.getElementById("yacht").checked) {
+      persona.mezzi = persona.mezzi + "Yacht ";
+    }
+
+    persona.materie = "";
+    var listaMaterie = document.getElementById("materie");
+
+    var contatore = 0;
+    for (var i = 0; i < listaMaterie.options.length; i++) {
+      if (listaMaterie.options[i].selected) {
+        persona.materie = persona.materie + listaMaterie.options[i].value + ", ";
+        contatore++;
+        if (contatore > 3) {
+          persona.materie = "hai selezionato troppe materie";
+          break;
+        }
+      }
+    }
+
+    document.getElementById("risultato").innerHTML =
+      "<h3>Dati inseriti:</h3>" +
+      "Nome: " + persona.nome + "<br>" +
+      "Cognome: " + persona.cognome + "<br>" +
+      "Indirizzo: " + persona.indirizzo + "<br>" +
+      "Città: " + persona.citta + "<br>" +
+      "CAP: " + persona.cap + "<br>" +
+      "Anno di nascita: " + persona.annoNascita + "<br>" +
+      "Età: " + persona.eta + " anni<br>" +
+      "Generazione: " + persona.generazione + "<br>" +
+      "Sesso: " + persona.sesso + "<br>" +
+      "Provincia: " + persona.provincia + "<br>" +
+      "Mezzi posseduti: " + persona.mezzi + "<br>" +
+      "Materie preferite: " + persona.materie;
+  }
+</script>
